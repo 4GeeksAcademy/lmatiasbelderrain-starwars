@@ -1,5 +1,5 @@
-export const initialStore=()=>{
-  return{
+export const initialStore = () => {
+  return {
     message: null,
     todos: [
       {
@@ -13,60 +13,100 @@ export const initialStore=()=>{
         background: null,
       }
     ],
-    personajes:[],
-    planetas:[],
+    personajes: [],
+    planetas: [],
+    planeta: {},
+    personaje: {},
   }
 }
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
+  switch (action.type) {
     case 'add_task':
 
-      const { id,  color } = action.payload
+      const { id, color } = action.payload
 
       return {
         ...store,
         todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
       };
-      case "load_personajes":{
-        return{
-          ...store,
-          personajes:action.payload
-        }
+    case "load_personajes": {
+      return {
+        ...store,
+        personajes: action.payload
       }
-      case "load_planetas":{
-        return{
-          ...store,
-          planetas:action.payload
-        }
+    }
+    case "load_planetas": {
+      return {
+        ...store,
+        planetas: action.payload
       }
+    }
+    case "load_infoplaneta": {
+      return {
+        ...store,
+        planeta: action.payload
+      }
+    }
+    case "load_infopeople": {
+      return {
+        ...store,
+        personaje: action.payload
+      }
+    }
 
     default:
       throw Error('Unknown action.');
-  }    
+  }
 }
-export const obtenerPersonajes = async(dispatch)=>{
+export const obtenerPersonajes = async (dispatch) => {
   try {
     const response = await fetch("https://swapi.dev/api/people")
     const data = await response.json()
     //console.log(data.results)
     dispatch({
-      type:"load_personajes",
-      payload:data.results,
+      type: "load_personajes",
+      payload: data.results,
     })
   } catch (error) {
     console.log(error)
   }
 }
 
-export const obtenerPlanetas = async(dispatch)=>{
+export const obtenerPlanetas = async (dispatch) => {
   try {
     const response = await fetch("https://swapi.dev/api/planets")
     const data = await response.json()
     //console.log(data.results)
     dispatch({
-      type:"load_planetas",
-      payload:data.results,
+      type: "load_planetas",
+      payload: data.results,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const obtenerInfoPlanetas = async (dispatch, id) => {
+  try {
+    const response = await fetch("https://swapi.dev/api/planets/" + (id))
+    const data = await response.json()
+    //console.log(data.results)
+    dispatch({
+      type: "load_infoplaneta",
+      payload: data,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const obtenerInfoPersonajes = async (dispatch, id) => {
+  try {
+    const response = await fetch("https://swapi.dev/api/people/" + (id))
+    const data = await response.json()
+    //console.log(data.results)
+    dispatch({
+      type: "load_infopeople",
+      payload: data,
     })
   } catch (error) {
     console.log(error)

@@ -15,7 +15,7 @@ export const CardPersonajes = ({ id, personajes }) => {
                     Color de ojos: {personajes.eye_color}
                 </p>
                 <div className="d-flex justify-content-between">
-                <Link href="#" className="btn btn-outline-warning">Learn more</Link>
+                <Link to={"/personajes/"+(id+1)} className="btn btn-outline-warning">Learn more</Link>
                 <button className="btn btn-outline-primary">like</button>
                 </div>
                 
