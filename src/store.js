@@ -17,6 +17,7 @@ export const initialStore = () => {
     planetas: [],
     planeta: {},
     personaje: {},
+    misFavoritos: [],
   }
 }
 
@@ -52,6 +53,18 @@ export default function storeReducer(store, action = {}) {
       return {
         ...store,
         personaje: action.payload
+      }
+    }
+    case "agregar_favorito": {
+      return {
+        ...store,
+        misFavoritos: [...store.misFavoritos, action.payload]
+      }
+    }
+    case "borrar_favorito": {
+      return {
+        ...store,
+        misFavoritos: store.misFavoritos.filter(favorito => favorito !== action.payload)
       }
     }
 
@@ -110,5 +123,18 @@ export const obtenerInfoPersonajes = async (dispatch, id) => {
     })
   } catch (error) {
     console.log(error)
+  }
+}
+export const favoritos = (dispatch, store, item) => {
+  if (store.misFavoritos.includes(item)) {
+    dispatch({
+      type: "borrar_favorito",
+      payload: item
+    })
+  } else {
+    dispatch({
+      type: "agregar_favorito",
+      payload: item
+    })
   }
 }

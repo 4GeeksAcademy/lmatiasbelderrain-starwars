@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { obtenerPersonajes, obtenerPlanetas } from "../store.js";
 import { CardPersonajes } from "../components/cartaPersonajes.jsx";
